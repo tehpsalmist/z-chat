@@ -1,0 +1,40 @@
+<script type="text/ng-template" id="wgn-main">
+	<div class="container">
+	    <div class="row">
+	        <div class="col-xs-12 text-center">
+	            <h1>Live Chat!</h1>
+	        </div>
+        </div>
+	    <div class="row">
+	        <div class="chat-box col-xs-12 col-md-6 col-md-offset-3">
+	            <ul class="chat-list">
+	                <li
+	                    class="chat-item"
+	                    ng-init="user = getUserById(message.userId)"
+	                    ng-class="{'flow-left': user.id === me.id}"
+	                    ng-repeat="message in messages"
+                    >
+	                    <img ng-src="{{loading ? '' : user.settings.avatarUrl}}" class="chat-img img-responsive img-circle">
+	                    <p class="chat-message">
+	                        {{message.message}}
+	                    </p>
+	                </li>
+	            </ul>
+	            <div class="chat-input">
+	                <textarea class="form-control" id="text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
+	                <button class="btn btn-primary" ng-click="addMessage()">Send</button>
+	            </div>
+            </div>
+            <div class="col-xs-12 text-center" ng-show="loading">
+                <span class="throbber"></span>
+            </div>
+        </div>
+	</div>
+</script>
+
+
+<script type="text/ng-template" id="wgn-settings">
+	<div class="title">
+		<h1>Z-Chat: {{text}}</h1>
+	</div>
+</script>
