@@ -1,0 +1,27 @@
+{
+  "name": "z-chat",
+  "version": "1.0.0",
+  "description": "one-on-one chat with members of your Zengine workspace",
+  "main": "index.js",
+  "scripts": {
+    "start": "node chokidar.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tehpsalmist/z-chat.git"
+  },
+  "keywords": [
+    "chat",
+    "zengine",
+    "one-on-one"
+  ],
+  "author": "Ben Steward <bstewardcodes@gmail.com> (https://tehpsalmist.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tehpsalmist/z-chat/issues"
+  },
+  "homepage": "https://github.com/tehpsalmist/z-chat#readme",
+  "devDependencies": {
+    "chokidar": "^2.0.4"
+  }
+}

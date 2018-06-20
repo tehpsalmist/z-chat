@@ -1,2 +1,4 @@
 maya.json
 maya_build/
+node_modules
+chokidar.js

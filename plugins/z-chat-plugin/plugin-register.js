@@ -1,7 +1,5 @@
 
-/**
- * Plugin Registration
- */
+/* global plugin */
 plugin.register('wgn', {
   route: '{replace-route}',
   title: 'Z-Chat',

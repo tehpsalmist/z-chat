@@ -1,6 +1,5 @@
-/**
- * Plugin z-chat Controller
- */
+/* global plugin Firebase */
+
 plugin.controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', function ($scope, $routeParams, znData, $firebase) {
   $scope.loading = true
 
@@ -110,7 +109,11 @@ plugin.controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', f
       $scope.sessions = $firebase(ref.child('sessions')).$asObject()
 
       // Set messages
-      $scope.messages = $firebase(ref.child('/messages')).$asArray()
+      $scope.messages = $firebase(ref.child('/messages'))
+        .$asArray()
+        .$watch(function (event) {
+          $scope.$emit('chatAutoscroll')
+        })
 
       // Set loading
       $scope.loading = false
@@ -140,4 +143,16 @@ plugin.controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', f
    */
   .controller('wgnSettingsCntl', ['$scope', function ($scope) {
     $scope.text = 'Settings'
+  }])
+  .directive('wgnChatAutoscroll', ['$timeout', function ($timeout) {
+    return {
+      link: function postLink (scope, element, attrs) {
+        scope.$on('chatAutoscroll', function () {
+          $timeout(function () {
+            element.scrollTop(element[0].scrollHeight)
+            console.log(element)
+          })
+        })
+      }
+    }
   }])
