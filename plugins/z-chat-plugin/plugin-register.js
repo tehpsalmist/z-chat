@@ -13,6 +13,12 @@ plugin.register('wgn', {
       topNav: true
     },
     {
+      controller: 'wgnCntl',
+      template: 'wgn-record',
+      type: 'recordOverlay',
+      order: 200
+    },
+    {
       controller: 'wgnSettingsCntl',
       template: 'wgn-settings',
       type: 'settings'

@@ -1,8 +1,8 @@
 <script type="text/ng-template" id="wgn-main">
 	<div class="container">
     <div class="row">
-      <div class="members-box col-md-3 col-sm-2 col-xs-12">
-        <div class="member-title text-center">
+      <div class="members-box col-md-4 col-sm-3 col-xs-2">
+        <div class="member-title text-center hidden-xs">
           <h2>Members</h2>
         </div>
         <ul class="member-list">
@@ -21,11 +21,11 @@
             <div ng-if="!member.user.settings.avatarUrl" class="dummy-avatar img-responsive img-circle">
               <span class="dummy-avatar-text">{{member.user.displayName.charAt(0).toUpperCase()}}</span>
             </div>
-            <h3 class="member-name">{{member.user.displayName}}</h3>
+            <h3 class="member-name hidden-xs">{{member.user.displayName}}</h3>
           </li>
         </ul>
       </div>
-      <div class="chat-box col-xs-12 col-sm-10 col-md-9">
+      <div class="chat-box col-xs-10 col-sm-7 col-md-6">
         <ul class="chat-list" wgn-chat-autoscroll>
           <li
             class="chat-item"
@@ -51,6 +51,56 @@
 	</div>
 </script>
 
+<script type="text/ng-template" id="wgn-record">
+  <div class="record-container">
+    <div class="record-members-box" ng-show="showMembers">
+      <ul class="member-list">
+        <li
+          class="member"
+          ng-class="{'chosen-member': member.user.id === selectedMemberId}"
+          ng-repeat="member in members | filter : notUser"
+          ng-click="selectMember(member.user.id)"
+        >
+          <img
+            ng-if="member.user.settings.avatarUrl"
+            ng-src="{{loading ? '' : member.user.settings.avatarUrl}}"
+            class="chat-img img-responsive img-circle"
+            ng-class="{online: sessions[member.user.id]}"
+          >
+          <div ng-if="!member.user.settings.avatarUrl" class="dummy-avatar img-responsive img-circle">
+            <span class="dummy-avatar-text">{{member.user.displayName.charAt(0).toUpperCase()}}</span>
+          </div>
+          <h3 class="member-name">{{member.user.displayName}}</h3>
+        </li>
+      </ul>
+    </div>
+    <div class="record-members-toggler" ng-click="showMembers = !showMembers">
+      <h4 class="record-members-toggler-text">&#9776; Members</h4>
+    </div>
+    <div class="record-chat-box">
+      <ul class="chat-list" wgn-chat-autoscroll>
+        <li
+          class="chat-item"
+          ng-init="user = getUserById(message.userId)"
+          ng-class="{'flow-left': user.id === me.id}"
+          ng-repeat="message in messages"
+        >
+          <img ng-if="user.id !== messages[$index - 1].userId" ng-src="{{loading ? '' : user.settings.avatarUrl}}" class="chat-img img-responsive img-circle">
+          <p class="chat-message">
+              {{message.message}}
+          </p>
+        </li>
+      </ul>
+      <div class="chat-input">
+        <textarea ng-disabled="!selectedMemberId" class="form-control" id="record-text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
+        <button class="btn btn-primary" ng-click="addMessage()">Send</button>
+      </div>
+    </div>
+    <div class="col-xs-12 text-center" ng-show="loading">
+      <span class="throbber"></span>
+    </div>
+	</div>
+</script>
 
 <script type="text/ng-template" id="wgn-settings">
 	<div class="title">

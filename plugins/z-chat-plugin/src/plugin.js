@@ -1,12 +1,13 @@
 /* global plugin Firebase */
 
 plugin
-  .controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', function ($scope, $routeParams, znData, $firebase) {
+  .controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', '$location', function ($scope, $routeParams, znData, $firebase, $location) {
     $scope.loading = true
     $scope.newMessage = ''
     $scope.selectedMemberId = null
     $scope.conversations = {}
     $scope.messages = []
+    $scope.showMembers = true
 
     $scope.getUserById = function (id) {
       return this.members.find(function (m) {
@@ -32,7 +33,8 @@ plugin
         : $scope.me.id + '-' + $scope.selectedMemberId
 
       $scope.messages = $scope.conversations[conversationId]
-      console.log($scope.messages)
+      $scope.showMembers = false
+      $scope.$emit('chatAutoscroll')
     }
 
     znData('WorkspaceMembers').query(
@@ -74,6 +76,10 @@ plugin
       }
     )
 
+    // $location.search('record', '62472.3595816')
+    // $location.search('tab', 'plugin.z-chat')
+    // $location.search('file-viewer', 1096679)
+
     var unbindInitialDataFetch = $scope.$watchCollection('[members, plugin, me]', function () {
       if ($scope.err) {
         $scope.loading = false
@@ -102,15 +108,18 @@ plugin
 
         $scope.conversations = $scope.members.reduce(function (conversations, member) {
           var id = member.user.id
-          var conversation = id > $scope.me.id ? id + '-' + $scope.me.id : $scope.me.id + '-' + id
-          conversations[conversation] = $firebase(new Firebase($scope.plugin.firebaseUrl + '/rooms/' + $routeParams.workspace_id + '/conversations/' + conversation).child('/messages')).$asArray()
-          conversations[conversation].$watch(function (event) {
-            $scope.$emit('chatAutoscroll')
-          })
+
+          if (id === $scope.me.id) return conversations
+
+          var conversationId = id > $scope.me.id ? id + '-' + $scope.me.id : $scope.me.id + '-' + id
+
+          conversations[conversationId] = $firebase(new Firebase($scope.plugin.firebaseUrl + '/rooms/' + $routeParams.workspace_id + '/conversations/' + conversationId).child('/messages')).$asArray()
+          conversations[conversationId]
+            .$watch(function (event) {
+              $scope.$emit('chatAutoscroll')
+            })
           return conversations
         }, {})
-
-        console.log($scope.conversations)
 
         connection.on('value', function (snapshot) {
           if (snapshot.val() === true) {
@@ -137,12 +146,14 @@ plugin
       $scope.messages.$add({
         userId: $scope.me.id,
         message: $scope.newMessage,
-        timestamp: Firebase.ServerValue.TIMESTAMP
+        timestamp: Firebase.ServerValue.TIMESTAMP,
+        read: false
       })
 
       $scope.newMessage = ''
 
-      document.querySelector('#text').focus() // Hey, it works.
+      document.querySelector('#text').focus()
+      if (document.querySelector('#record-text')) document.querySelector('#record-text').focus()
     }
   }])
   .controller('wgnSettingsCntl', ['$scope', function ($scope) {
