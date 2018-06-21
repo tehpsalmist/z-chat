@@ -32,6 +32,7 @@
 
 .chosen-member {
   border: solid 2px #3A7297;
+  border-radius: 50px;
 }
 
 .member-name {
