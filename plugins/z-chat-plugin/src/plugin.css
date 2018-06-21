@@ -2,11 +2,67 @@
  * Plugin z-chat CSS
  */
 
+.members-box {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  padding: 0;
+}
+
+.member-title {
+  height: auto;
+  flex-shrink: 0;
+}
+
+.member-list {
+  list-style: none;
+  padding: 2px;
+  overflow: scroll;
+  flex-grow: 1;
+}
+
+.online {
+  border: solid 2px #27ee27;
+}
+
+.member {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 5px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chosen-member {
+  border: solid 2px #3A7297;
+}
+
+.member-name {
+  margin: 0;
+}
+
+.dummy-avatar {
+  margin: 5px;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(164, 244, 255);
+}
+
+.dummy-avatar-text {
+  margin: auto;
+  padding: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #3A7297;
+}
+
 .chat-box {
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  border: solid 2px rgb(75, 245, 103);
+  height: 90vh;
+  border: solid 2px #3A7297;
   border-radius: 4px;
   padding: 0;
 }
@@ -55,6 +111,6 @@
 }
 
 .chat-message {
-  padding: 0 5px;
+  padding: 0 15px;
   margin: 4px 0;
 }
