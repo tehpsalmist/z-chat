@@ -1,7 +1,7 @@
 /* global plugin Firebase */
 
 plugin
-  .controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', '$location', function ($scope, $routeParams, znData, $firebase, $location) {
+  .controller('wgnCntl', ['$scope', '$routeParams', 'znData', '$firebase', '$location', 'znFiltersPanel', function ($scope, $routeParams, znData, $firebase, $location, znFiltersPanel) {
     $scope.loading = true
     $scope.newMessage = ''
     $scope.selectedMemberId = null
@@ -76,8 +76,18 @@ plugin
       }
     )
 
-    // $location.search('record', '62472.3595816')
-    // $location.search('tab', 'plugin.z-chat')
+    $scope.searchForms = function () {
+
+    }
+
+    $scope.searchFiles = function () {
+
+    }
+
+    $scope.attachRecord = function () {
+
+    }
+
     // $location.search('file-viewer', 1096679)
 
     var unbindInitialDataFetch = $scope.$watchCollection('[members, plugin, me]', function () {
@@ -137,6 +147,9 @@ plugin
 
         $scope.loading = false
         $scope.$apply()
+        // $location.search('record', '62472.3595816')
+        // $location.search('tab', 'plugin.zChat')
+        // $location.search('member', 1)
       })
     }
 
@@ -170,5 +183,3 @@ plugin
       }
     }
   }])
-
-// 02b91bb527313bbcca7cd1b6c103546c15d0b375

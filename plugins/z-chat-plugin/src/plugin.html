@@ -40,8 +40,12 @@
           </li>
         </ul>
         <div class="chat-input">
+          <div class="record-buttons">
+            <button class="btn btn-primary record-button" ng-click="searchForms()">Forms</button>
+            <button class="btn btn-primary record-button" ng-click="searchFiles()">Files</button>
+          </div>
           <textarea ng-disabled="!selectedMemberId" class="form-control" id="text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
-          <button class="btn btn-primary" ng-click="addMessage()">Send</button>
+          <button class="btn btn-success" ng-click="addMessage()">Send</button>
         </div>
       </div>
       <div class="col-xs-12 text-center" ng-show="loading">
@@ -92,8 +96,11 @@
         </li>
       </ul>
       <div class="chat-input">
-        <textarea ng-disabled="!selectedMemberId" class="form-control" id="record-text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
-        <button class="btn btn-primary" ng-click="addMessage()">Send</button>
+        <textarea rows="3" ng-disabled="!selectedMemberId" class="form-control" id="record-text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
+        <div class="record-buttons">
+          <button class="btn btn-success record-button" ng-click="addMessage()">Send</button>
+          <button class="btn btn-primary record-button" ng-click="attachRecord()">Files</button>
+        </div>
       </div>
     </div>
     <div class="col-xs-12 text-center" ng-show="loading">

@@ -97,7 +97,7 @@
   margin-right: 20px;
   margin-bottom: 2px;
   border: solid 1px lightblue;
-  border-radius: 4px;
+  border-radius: 30px;
 }
 
 .flow-left {
@@ -112,8 +112,8 @@
 }
 
 .chat-message {
-  padding: 0 15px;
-  margin: 4px 0;
+  padding: 0 18px;
+  margin: 6px 0;
 }
 
 /* Record Overlay Specific Styles */
@@ -128,6 +128,11 @@
   bottom: 5px;
   margin: 0;
   padding: 0;
+}
+
+#record-text {
+  resize: none;
+  flex-grow: 1;
 }
 
 .record-members-box {
@@ -159,4 +164,14 @@
   flex-grow: 1;
   width: 100%;
   padding: 0;
+}
+
+.record-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-button {
+  align-self: stretch;
+  flex-grow: 1;
 }
