@@ -35,13 +35,15 @@
           >
             <img ng-if="user.id !== messages[$index - 1].userId" ng-src="{{loading ? '' : user.settings.avatarUrl}}" class="chat-img img-responsive img-circle">
             <p class="chat-message">
-                {{message.message}}
+                {{message.message && message.message }}
+              <a style="cursor: pointer;" ng-if="message.record" ng-click="visitRecord(message.record)">{{message.record | wgnConvertRecordToName}}
+              </a>
             </p>
           </li>
         </ul>
         <div class="chat-input">
           <div class="record-buttons">
-            <button class="btn btn-primary record-button" ng-click="searchForms()">Forms</button>
+            <button class="btn btn-primary record-button" ng-click="searchRecords()">Records</button>
             <button class="btn btn-primary record-button" ng-click="searchFiles()">Files</button>
           </div>
           <textarea ng-disabled="!selectedMemberId" class="form-control" id="text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
@@ -91,15 +93,19 @@
         >
           <img ng-if="user.id !== messages[$index - 1].userId" ng-src="{{loading ? '' : user.settings.avatarUrl}}" class="chat-img img-responsive img-circle">
           <p class="chat-message">
-              {{message.message}}
+              {{message.message && message.message }}
+              <a style="cursor: pointer;" ng-if="message.record" ng-click="$location.search('record', message.record)">
+                {{message.record | wgnConvertRecordToName}}
+              </a>
           </p>
+
         </li>
       </ul>
       <div class="chat-input">
         <textarea rows="3" ng-disabled="!selectedMemberId" class="form-control" id="record-text" ng-keyup="onType($event)" ng-model="newMessage"></textarea>
         <div class="record-buttons">
           <button class="btn btn-success record-button" ng-click="addMessage()">Send</button>
-          <button class="btn btn-primary record-button" ng-click="attachRecord()">Files</button>
+          <button class="btn btn-primary record-button" ng-click="attachRecord()">Attach<br>Record</button>
         </div>
       </div>
     </div>

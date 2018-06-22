@@ -35,6 +35,8 @@ plugin
       $scope.messages = $scope.conversations[conversationId]
       $scope.showMembers = false
       $scope.$emit('chatAutoscroll')
+      if (document.querySelector('#text')) document.querySelector('#text').focus()
+      else if (document.querySelector('#record-text')) document.querySelector('#record-text').focus()
     }
 
     znData('WorkspaceMembers').query(
@@ -85,7 +87,19 @@ plugin
     }
 
     $scope.attachRecord = function () {
+      $scope.messages.$add({
+        userId: $scope.me.id,
+        message: null,
+        record: $routeParams.record,
+        timestamp: Firebase.ServerValue.TIMESTAMP,
+        read: false
+      })
+      if (document.querySelector('#text')) document.querySelector('#text').focus()
+      else if (document.querySelector('#record-text')) document.querySelector('#record-text').focus()
+    }
 
+    $scope.visitRecord = function (record) {
+      $location.search('record', record)
     }
 
     // $location.search('file-viewer', 1096679)
@@ -165,8 +179,8 @@ plugin
 
       $scope.newMessage = ''
 
-      document.querySelector('#text').focus()
-      if (document.querySelector('#record-text')) document.querySelector('#record-text').focus()
+      if (document.querySelector('#text')) document.querySelector('#text').focus()
+      else if (document.querySelector('#record-text')) document.querySelector('#record-text').focus()
     }
   }])
   .controller('wgnSettingsCntl', ['$scope', function ($scope) {
@@ -182,4 +196,31 @@ plugin
         })
       }
     }
+  }])
+  .filter('wgnConvertRecordToName', ['znData', function (znData) {
+    var loading = false
+    var recordNames = {}
+
+    function getRecordName (formRecord) {
+      var currentName = formRecord
+      if (recordNames[formRecord]) {
+        currentName = recordNames[formRecord]
+      } else if (loading === false && recordNames[formRecord] === undefined) {
+        loading = true
+        znData('FormRecords')
+          .get(
+            { formId: formRecord.split('.')[0], id: formRecord.split('.')[1] },
+            function (recordInfo) {
+              recordNames[formRecord] = recordInfo.name
+              loading = false
+            },
+            function (error) {
+              console.error(error)
+              loading = false
+            }
+          )
+      }
+      return currentName
+    }
+    return getRecordName
   }])
