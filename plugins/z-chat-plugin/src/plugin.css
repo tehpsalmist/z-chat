@@ -56,7 +56,7 @@
 }
 
 .online {
-  background-clip: padding-box;
+  background-clip: content-box;
   border: solid 2px #27ee27;
 }
 
