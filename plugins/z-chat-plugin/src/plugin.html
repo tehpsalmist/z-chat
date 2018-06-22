@@ -94,7 +94,7 @@
           <img ng-if="user.id !== messages[$index - 1].userId" ng-src="{{loading ? '' : user.settings.avatarUrl}}" class="chat-img img-responsive img-circle">
           <p class="chat-message">
               {{message.message && message.message }}
-              <a style="cursor: pointer;" ng-if="message.record" ng-click="$location.search('record', message.record)">
+              <a style="cursor: pointer;" ng-if="message.record" ng-click="visitRecord(message.record)">
                 {{message.record | wgnConvertRecordToName}}
               </a>
           </p>

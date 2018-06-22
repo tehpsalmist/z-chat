@@ -100,6 +100,8 @@ plugin
 
     $scope.visitRecord = function (record) {
       $location.search('record', record)
+      $location.search('tab', 'plugin.zChat')
+      $location.search('member', $scope.selectedMemberId)
     }
 
     // $location.search('file-viewer', 1096679)
@@ -158,6 +160,8 @@ plugin
         })
 
         $scope.sessions = $firebase(room.child('sessions')).$asObject()
+
+        $routeParams.member && $scope.selectMember($routeParams.member)
 
         $scope.loading = false
         $scope.$apply()
