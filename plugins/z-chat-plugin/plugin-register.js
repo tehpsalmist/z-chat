@@ -2,7 +2,7 @@
 /* global plugin */
 plugin.register('wgn', {
   route: '{replace-route}',
-  title: 'Z-Chat',
+  title: 'ZenChat',
   icon: 'icon-chat',
   interfaces: [
     {
