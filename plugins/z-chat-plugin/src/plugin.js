@@ -133,7 +133,7 @@ plugin
 
         $scope.visitRecord = function (record) {
           $location.search('record', record)
-          $location.search('tab', 'plugin.zChat')
+          $location.search('tab', 'plugin.zenChat')
           $location.search('member', $scope.selectedMemberId)
         }
 
@@ -154,7 +154,7 @@ plugin
         )
 
         znData('Plugins').get(
-          { namespace: 'zchat' },
+          { namespace: 'zenChat' },
           function (resp) { $scope.plugin = resp[0] },
           function (resp) { $scope.err = resp }
         )
